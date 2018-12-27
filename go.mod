@@ -1,4 +1,4 @@
-module github.com/golang-migrate/migrate
+module github.com/status-im/migrate
 
 require (
 	cloud.google.com/go v0.23.0
