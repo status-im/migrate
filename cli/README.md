@@ -2,7 +2,7 @@
 
 ## Installation
 
-#### Download pre-build binary (Windows, MacOS, or Linux)
+#### Download pre-built binary (Windows, MacOS, or Linux)
 
 [Release Downloads](https://github.com/golang-migrate/migrate/releases)
 
@@ -12,29 +12,37 @@ $ curl -L https://github.com/golang-migrate/migrate/releases/download/$version/m
 
 #### MacOS
 
-We have not released support for homebrew yet, but there is a live issue here: [todo #156](https://github.com/mattes/migrate/issues/156)
-
-Any help to make this happen would be appreciated!
+```
+$ brew install golang-migrate
+```
 
 #### Linux (*.deb package)
 
 ```
 $ curl -L https://packagecloud.io/golang-migrate/migrate/gpgkey | apt-key add -
-$ echo "deb https://packagecloud.io/golang-migrate/migrate/ubuntu/ xenial main" > /etc/apt/sources.list.d/migrate.list
+$ echo "deb https://packagecloud.io/golang-migrate/migrate/ubuntu/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/migrate.list
 $ apt-get update
 $ apt-get install -y migrate
 ```
 
 #### With Go toolchain
 
+##### Unversioned
 ```
-$ go get -u -d github.com/golang-migrate/migrate/cli
-$ cd $GOPATH/src/github.com/golang-migrate/migrate/cli
-$ dep ensure
-$ go build -tags 'postgres' -o /usr/local/bin/migrate github.com/golang-migrate/migrate/cli
+$ go get -tags 'postgres' -u github.com/golang-migrate/migrate/cmd/migrate
+```
+
+##### Versioned
+
+```
+$ go get -u -d github.com/golang-migrate/migrate/cmd/migrate
+$ cd $GOPATH/src/github.com/golang-migrate/migrate/cmd/migrate
+$ git checkout $TAG  # e.g. v4.1.0
+$ go build -tags 'postgres' -ldflags="-X main.Version=$(git describe --tags)" -o $GOPATH/bin/migrate github.com/golang-migrate/migrate/cmd/migrate
 ```
 
 ##### Notes:
+1. Requires a version of Go that [supports modules](https://golang.org/cmd/go/#hdr-Preliminary_module_support). e.g. Go 1.11+
 1. This example builds the cli which will only work with postgres.  In order
 to build the cli for use with other databases, replace the `postgres` build tag
 with the appropriate database tag(s) for the databases desired.  The tags
@@ -111,7 +119,7 @@ $ migrate -database "$(cat config.json | jq '.database')"
 
 ##### YAML files
 
-````
+```
 $ migrate -database "$(cat config/database.yml | ruby -ryaml -e "print YAML.load(STDIN.read)['database']")"
 $ migrate -database "$(cat config/database.yml | python -c 'import yaml,sys;print yaml.safe_load(sys.stdin)["database"]')"
 ```
