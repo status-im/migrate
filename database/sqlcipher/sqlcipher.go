@@ -3,13 +3,14 @@ package sqlcipher
 import (
 	"database/sql"
 	"fmt"
-	"github.com/golang-migrate/migrate"
-	"github.com/golang-migrate/migrate/database"
-	_ "github.com/mutecomm/go-sqlcipher"
 	"io"
 	"io/ioutil"
 	nurl "net/url"
 	"strings"
+
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database"
+	_ "github.com/mutecomm/go-sqlcipher"
 )
 
 func init() {
