@@ -3,9 +3,9 @@ package sqlcipher
 import (
 	"database/sql"
 	"fmt"
-	"github.com/golang-migrate/migrate"
-	dt "github.com/golang-migrate/migrate/database/testing"
-	_ "github.com/golang-migrate/migrate/source/file"
+	"github.com/golang-migrate/migrate/v4"
+	dt "github.com/golang-migrate/migrate/v4/database/testing"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/mattn/go-sqlite3"
 	"io/ioutil"
 	"os"
